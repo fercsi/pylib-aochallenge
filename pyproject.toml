@@ -19,4 +19,4 @@ classifiers = [
 
 [project.urls]
 "Homepage" = "https://github.com/fercsi/pylib-aochallenge"
-"Bug Tracker" = "https://github.com/pypa/pylib-aochallenge/issues"
+"Bug Tracker" = "https://github.com/fercsi/pylib-aochallenge/issues"
