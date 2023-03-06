@@ -93,14 +93,14 @@ the latter is not specified, file handling is automatic (see above).
 `load` function does  not only import data, but  does some preprocessing
 on them:
 
-```
-    def load(self,
-            splitlines: bool = False,
-            splitrecords: str|None = None,
-            recordtype:  list|tuple|type|None = None,
-            *,
-            lut: dict[str|None, Any]|None = None,
-            ) -> list[str|int|list]
+```python
+def load(self,
+        splitlines: bool = False,
+        splitrecords: str|None = None,
+        recordtype:  list|tuple|type|None = None,
+        *,
+        lut: dict[str|None, Any]|None = None,
+        ) -> list[str|int|list]
 ```
 
 Parameters:
