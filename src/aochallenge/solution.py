@@ -5,6 +5,8 @@ import sys
 from typing import cast, Any, Generator
 
 class Solution:
+    basename: str
+
     def __init__(self) -> None:
         self.basename: str = sys.argv[0][:-3]
 
