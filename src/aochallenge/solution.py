@@ -16,7 +16,7 @@ class Solution:
             recordtype:  list | tuple | type | None = None,
             *,
             lut: dict[str | None, Any] | None = None,
-            ) -> list[str | int | list]:
+            ) -> list[str | int | list] | Any:
         variant: str = sys.argv[1] if len(sys.argv)>1 else ''
         content: Any
         if lut:
