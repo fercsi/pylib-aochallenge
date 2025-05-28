@@ -78,32 +78,15 @@ class Solution:
             yield method()
             i += 1
 
-    def print_condensed(self, data: list[list[int|str]]):
-        for row in data:
-            print(*row, sep='')
+    # Print methods are deprecated, use global functions instead
+    def print_condensed(self, data: list[list[int | str]]):
+        return print_condensed(data)
 
-    def print_csv(self, data: list[list[int|str]]):
-        for row in data:
-            print(*row, sep=',')
+    def print_csv(self, data: list[list[int | str]]):
+        return print_csv(data)
 
-    def print_arranged(self, data: list[list[int|str]]):
-        col_widths: list[int] = []
-        for r,row in enumerate(data):
-            for c,value in enumerate(row):
-                data_width = len(str(value))
-                if c >= len(col_widths):
-                    col_widths.append(data_width)
-                elif data_width > col_widths[c]:
-                    col_widths[c] = data_width
-        for r,row in enumerate(data):
-            for c,value in enumerate(row):
-                if c:
-                    print(' ', end='')
-                if type(value) == int:
-                    print(str(value).rjust(col_widths[c]), end='')
-                else:
-                    print(str(value).ljust(col_widths[c]), end='')
-            print('')
+    def print_arranged(self, data: list[list[int | str]]):
+        return print_arranged(data)
 
     def main(self) -> None:
         for i, result in enumerate(self.solve_more(), 1):
