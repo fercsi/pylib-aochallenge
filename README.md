@@ -84,6 +84,17 @@ def __init__(self):
     data = self.load(lut=INPUT)
 ```
 
+If you need which variant the solution has been run with, you can check it with
+`variant`. It returns `None` if no variant has bee given and the variant id
+(E.g. `"-t"`) if it has been:
+
+```python
+def __init__(self):
+    ...
+    if self.variant() is None:
+        # no variant branch
+```
+
 ### Using `load` method
 
 The `load`  method is used to  prepare the data for  further processing.
