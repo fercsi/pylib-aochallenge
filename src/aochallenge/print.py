@@ -1,17 +1,23 @@
 #!/usr/bin/python3
 
+from typing import TYPE_CHECKING
+from .grid import Grid2D, T
 
-def print_condensed(data: list[list[int | str]]):
+if TYPE_CHECKING:  # Solution imports print and print needs to import solution
+    from solution import Solution
+
+
+def print_condensed(data: Grid2D[T]) -> None:
     for row in data:
         print(*row, sep="")
 
 
-def print_csv(data: list[list[int | str]]):
+def print_csv(data: Grid2D[T]) -> None:
     for row in data:
         print(*row, sep=",")
 
 
-def print_arranged(data: list[list[int | str]]):
+def print_arranged(data: Grid2D[T]) -> None:
     col_widths: list[int] = []
     for r, row in enumerate(data):
         for c, value in enumerate(row):

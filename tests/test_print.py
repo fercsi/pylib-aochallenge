@@ -1,6 +1,6 @@
 import pytest
 
-from aochallenge import print_condensed, print_csv, print_arranged
+from aochallenge import *
 
 
 @pytest.mark.parametrize(
@@ -17,7 +17,10 @@ def test_print_condensed(data, printed, capsys):
 
 
 @pytest.mark.parametrize(
-    "data, printed", (([[1, 34], [True, "xyz"]], "1,34\nTrue,xyz\n"),)
+    "data, printed",
+    (
+        ([[1, 34], [True, "xyz"]], "1,34\nTrue,xyz\n"),
+    )
 )
 def test_print_csv(data, printed, capsys):
     print_csv(data)
