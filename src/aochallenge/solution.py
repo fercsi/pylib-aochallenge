@@ -4,8 +4,6 @@ import itertools
 import sys
 from typing import cast, Any, Generator
 
-from .print import *
-
 
 class Solution:
     basename: str
@@ -57,7 +55,9 @@ class Solution:
     def variant(self) -> str | None:
         return sys.argv[1] if len(sys.argv) > 1 else None
 
-    def convert_records(self, content, recordtype: list | tuple | type) -> list:
+    def convert_records(
+        self, content: str, recordtype: list | tuple | type
+    ) -> list[Any]:
         if callable(recordtype):
             return [recordtype(e) for e in content]
         if type(recordtype) in (list, tuple):
@@ -79,13 +79,19 @@ class Solution:
             i += 1
 
     # Print methods are deprecated, use global functions instead
-    def print_condensed(self, data: list[list[int | str]]):
+    def print_condensed(self, data: list[list[int | str]]) -> None:
+        from .print import print_condensed
+
         return print_condensed(data)
 
-    def print_csv(self, data: list[list[int | str]]):
+    def print_csv(self, data: list[list[int | str]]) -> None:
+        from .print import print_csv
+
         return print_csv(data)
 
-    def print_arranged(self, data: list[list[int | str]]):
+    def print_arranged(self, data: list[list[int | str]]) -> None:
+        from .print import print_arranged
+
         return print_arranged(data)
 
     def main(self) -> None:

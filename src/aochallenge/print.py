@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 
-from typing import TYPE_CHECKING
-from .grid import Grid2D, T
 
-if TYPE_CHECKING:  # Solution imports print and print needs to import solution
-    from solution import Solution
+from .solution import Solution
+from .grid import Grid2D, T
 
 
 def print_condensed(data: Grid2D[T]) -> None:
