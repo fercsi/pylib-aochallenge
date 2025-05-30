@@ -2,6 +2,7 @@
 
 from .solution import Solution
 from .print import print_condensed, print_csv, print_arranged, print_solution
+from .image import save_image
 from . import grid
 
 import sys
