@@ -29,3 +29,11 @@ def print_arranged(data: list[list[int | str]]):
             else:
                 print(str(value).ljust(col_widths[c]), end="")
         print("")
+
+
+def print_solution(solution: "Solution", *, indent: str = "") -> None:
+    content = solution.__dict__
+    for name, value in content.items():
+        if name in ("basename",):
+            continue
+        print(f"{indent}{name}: {value}")
