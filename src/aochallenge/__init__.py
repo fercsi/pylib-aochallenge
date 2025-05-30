@@ -2,6 +2,7 @@
 
 from .solution import Solution
 from .print import print_condensed, print_csv, print_arranged
+from . import grid
 
 import sys
 import re
