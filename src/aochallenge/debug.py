@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
-
-from .solution import Solution
 from .grid import Grid2D, T
+from .solution import Solution
 
 
 def print_condensed(data: Grid2D[T]) -> None:
@@ -39,5 +38,6 @@ def print_solution(solution: "Solution", *, indent: str = "") -> None:
     content = solution.__dict__
     for name, value in content.items():
         if name in ("basename",):
+            print(1)
             continue
         print(f"{indent}{name}: {value}")

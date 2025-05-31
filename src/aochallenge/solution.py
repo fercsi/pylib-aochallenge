@@ -80,17 +80,17 @@ class Solution:
 
     # Print methods are deprecated, use global functions instead
     def print_condensed(self, data: list[list[int | str]]) -> None:
-        from .print import print_condensed
+        from .debug import print_condensed
 
         return print_condensed(data)
 
     def print_csv(self, data: list[list[int | str]]) -> None:
-        from .print import print_csv
+        from .debug import print_csv
 
         return print_csv(data)
 
     def print_arranged(self, data: list[list[int | str]]) -> None:
-        from .print import print_arranged
+        from .debug import print_arranged
 
         return print_arranged(data)
 
