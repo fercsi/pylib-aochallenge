@@ -43,12 +43,14 @@ def test_print_arranged(data, printed, capsys):
 def test_print_solution(capsys):
     class TestSolution(Solution):
         def __init__(self) -> None:
+            super().__init__()
             self.s = "abc"
             self.x = 42
             self.y = 13.7
             self.arr = [1,2,3]
-    solution = TestSolution()
-    print_solution(solution)
+    test_solution = TestSolution()
+#>    print(list(test_solution.__dict__.keys()))
+    print_solution(test_solution)
     captured = capsys.readouterr()
-    expected = "s: abc\nx: 42\ny: 13.7\narr: [1, 2, 3]\n"
+    expected = "1\ns: abc\nx: 42\ny: 13.7\narr: [1, 2, 3]\n"
     assert captured.out == expected
