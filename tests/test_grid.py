@@ -79,6 +79,32 @@ def test_sub_3d(a, b, expected, should_fail):
     else:
         assert a - b == expected
 
+########## distance ####################
+
+@pytest.mark.parametrize(
+    "a,b,expected",
+    [
+        (Coord2D(0, 0), Coord2D(0, 0), 0),
+        (Coord2D(1, 2), Coord2D(4, 6), 7),
+        (Coord2D(-1, -2), Coord2D(3, 1), 7),
+        (Coord2D(5, 5), Coord2D(2, 1), 7),
+    ]
+)
+def test_manhattan_2d(a, b, expected):
+    assert manhattan_2d(a, b) == expected
+
+@pytest.mark.parametrize(
+    "a,b,expected",
+    [
+        (Coord3D(0, 0, 0), Coord3D(0, 0, 0), 0),
+        (Coord3D(1, 2, 3), Coord3D(4, 6, 9), 13),
+        (Coord3D(-1, -2, -3), Coord3D(3, 1, 2), 12),
+        (Coord3D(5, 5, 5), Coord3D(2, 1, 0), 12),
+    ]
+)
+def test_manhattan_3d(a, b, expected):
+    assert manhattan_3d(a, b) == expected
+
 ########## is_within ####################
 
 @pytest.mark.parametrize(

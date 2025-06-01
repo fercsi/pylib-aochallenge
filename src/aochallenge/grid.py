@@ -57,6 +57,13 @@ class Coord3D(NamedTuple):
 _Coord2D = Coord2D | tuple[int, int]
 _Coord3D = Coord3D | tuple[int, int, int]
 
+def manhattan_2d(a: _Coord2D, b: _Coord2D) -> int:
+    d = _c2d(a) - b
+    return abs(d.x) + abs(d.y)
+
+def manhattan_3d(a: _Coord3D, b: _Coord3D) -> int:
+    d = _c3d(a) - b
+    return abs(d.x) + abs(d.y) + abs(d.z)
 
 def is_within_2d(coord: _Coord2D, corner1: _Coord2D, corner2: _Coord2D) -> bool:
     v = _c2d(coord)
@@ -192,6 +199,7 @@ def iter_grid_3d(grid: Grid3D[T]) -> Iterator[tuple[Coord3D, T]]:
 
 Coord = Coord2D
 Grid = Grid2D
+manhattan = manhattan_2d
 is_within = is_within_2d
 neighbours = neighbours_2d
 bounded_neighbours = bounded_neighbours_2d
