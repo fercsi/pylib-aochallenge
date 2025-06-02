@@ -155,14 +155,26 @@ def bounded_neighbours_full_3d(
         if is_within_3d(d + coord, corner1, corner2)
     ]
 
+########## Grids ####################
 
 T = TypeVar("T")
 
-Grid2D: TypeAlias = list[list[T]]
-Grid3D: TypeAlias = list[list[list[T]]]
+# from Python 3.12 (mypy is also not prepared for this, yet)
+#type MutableGrid2D[T] = list[list[T]]
+#type _ImmutableDim[T] = tuple[T, ...]|str
+#type _ImmutableGrid2D[T] = tuple[_immutableDim[T], ...]|list[_immutableDim[T]]
+#type Grid2D[T] = MutableGrid2D[T]|_ImmutableGrid2D[T]
+#type MutableGrid3D[T] = list[list[list[T]]]
+#type _ImmutableGrid23[T] = tuple[_immutableGrid2D[T], ...]|list[_immutableGrid2D[T]]
+#type Grid3D[T] = MutableGrid3D[T]|_ImmutableGrid3D[T]
+
+MutableGrid2D: TypeAlias = list[list[T]]
+Grid2D: TypeAlias = list[list[T]]|tuple[tuple[T, ...], ...]
+MutableGrid3D: TypeAlias = list[list[list[T]]]
+Grid3D: TypeAlias = list[list[list[T]]]|tuple[tuple[tuple[T, ...], ...], ...]
 
 
-def set_element_2d(grid: Grid2D[T], pos: _Coord2D, value: T) -> None:
+def set_element_2d(grid: MutableGrid2D[T], pos: _Coord2D, value: T) -> None:
     p = _c2d(pos)
     grid[p.y][p.x] = value
 
@@ -172,7 +184,7 @@ def get_element_2d(grid: Grid2D[T], pos: _Coord2D) -> T:
     return grid[p.y][p.x]
 
 
-def set_element_3d(grid: Grid3D[T], pos: _Coord3D, value: T) -> None:
+def set_element_3d(grid: MutableGrid3D[T], pos: _Coord3D, value: T) -> None:
     p = _c3d(pos)
     grid[p.z][p.y][p.x] = value
 
@@ -198,7 +210,8 @@ def iter_grid_3d(grid: Grid3D[T]) -> Iterator[tuple[Coord3D, T]]:
 ########## Simplify 2D interface ####################
 
 Coord = Coord2D
-Grid = Grid2D
+#Grid = Grid2D
+Grid: TypeAlias = list[list[T]]|tuple[tuple[T, ...], ...]
 manhattan = manhattan_2d
 is_within = is_within_2d
 neighbours = neighbours_2d
