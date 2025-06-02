@@ -12,6 +12,7 @@ class Coord2D(NamedTuple):
     y: int
 
     def __add__(self, other: Coord2D | tuple[int, int] | int) -> Coord2D:  # type: ignore[override]
+        # Note: NamedTuple has an __add__ method defined with different annotation
         if isinstance(other, Coord2D):
             return Coord2D(self.x + other.x, self.y + other.y)
         if isinstance(other, tuple) and len(other) == 2:
@@ -20,7 +21,7 @@ class Coord2D(NamedTuple):
             return Coord2D(self.x + other, self.y + other)
         return NotImplemented
 
-    def __sub__(self, other: Coord2D | tuple[int, int] | int) -> Coord2D:  # type: ignore[override]
+    def __sub__(self, other: Coord2D | tuple[int, int] | int) -> Coord2D:
         if isinstance(other, Coord2D):
             return Coord2D(self.x - other.x, self.y - other.y)
         if isinstance(other, tuple) and len(other) == 2:
@@ -36,6 +37,7 @@ class Coord3D(NamedTuple):
     z: int
 
     def __add__(self, other: Coord3D | tuple[int, int, int] | int) -> Coord3D:  # type: ignore[override]
+        # Note: NamedTuple has an __add__ method defined with different annotation
         if isinstance(other, Coord3D):
             return Coord3D(self.x + other.x, self.y + other.y, self.z + other.z)
         if isinstance(other, tuple) and len(other) == 3:
@@ -44,7 +46,7 @@ class Coord3D(NamedTuple):
             return Coord3D(self.x + other, self.y + other, self.z + other)
         return NotImplemented
 
-    def __sub__(self, other: Coord3D | tuple[int, int, int] | int) -> Coord3D:  # type: ignore[override]
+    def __sub__(self, other: Coord3D | tuple[int, int, int] | int) -> Coord3D:
         if isinstance(other, Coord3D):
             return Coord3D(self.x - other.x, self.y - other.y, self.z - other.z)
         if isinstance(other, tuple) and len(other) == 3:
@@ -210,8 +212,8 @@ def iter_grid_3d(grid: Grid3D[T]) -> Iterator[tuple[Coord3D, T]]:
 ########## Simplify 2D interface ####################
 
 Coord = Coord2D
-#Grid = Grid2D
 Grid: TypeAlias = list[list[T]]|tuple[tuple[T, ...], ...]
+MutableGrid: TypeAlias = list[list[T]]
 manhattan = manhattan_2d
 is_within = is_within_2d
 neighbours = neighbours_2d

@@ -15,17 +15,17 @@ class Solution:
         self,
         splitlines: bool = False,
         splitrecords: str | None = None,
-        recordtype: list | tuple | type | None = None,
+        recordtype: list[type] | tuple[type, ...] | type | None = None,
         *,
         lut: dict[str | None, Any] | None = None,
-    ) -> list[str | int | list] | Any:
+    ) -> list[str | int | list[str | int]] | Any:
         variant: str = sys.argv[1] if len(sys.argv) > 1 else ""
         content: Any
-        if lut:
+        if lut is not None:
             lut_content = lut[variant if variant else None]
             if not isinstance(lut_content, str):
                 return lut_content
-            content = cast(str, lut_content)
+            content = lut_content
         else:
             fname: str = self.basename + variant + ".input"
             with open(fname, "r") as f:
@@ -56,18 +56,19 @@ class Solution:
         return sys.argv[1] if len(sys.argv) > 1 else None
 
     def convert_records(
-        self, content: str, recordtype: list | tuple | type
+        self, content: str, recordtype: list[type] | tuple[type, ...] | type
     ) -> list[Any]:
         if callable(recordtype):
             return [recordtype(e) for e in content]
         if type(recordtype) in (list, tuple):
-            lastfunc: type | bool | None = False
-            newcontent: list = []
+            lastfunc: type | None = str
+            newcontent: list[Any] = []
             for data, func in itertools.zip_longest(content, recordtype):
                 if func is None:
                     func = lastfunc
                 else:
                     lastfunc = func
+                assert func is not None
                 newcontent.append(func(data))
         return newcontent
 
