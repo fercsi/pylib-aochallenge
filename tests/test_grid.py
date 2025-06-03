@@ -135,7 +135,7 @@ def test_is_within_2d(coord, corner1, corner2, expected):
 def test_is_within_3d(coord, corner1, corner2, expected):
     assert is_within_3d(coord, corner1, corner2) == expected
 
-########## neighbours 2D ####################
+########## neighbors 2D ####################
 
 @pytest.mark.parametrize(
     "coord, expected",
@@ -144,8 +144,8 @@ def test_is_within_3d(coord, corner1, corner2, expected):
         (Coord2D(2, 2), [Coord2D(2, 3), Coord2D(3, 2), Coord2D(2, 1), Coord2D(1, 2)]),
     ]
 )
-def test_neighbours_2d(coord, expected):
-    assert sorted(neighbours_2d(coord)) == sorted(expected)
+def test_neighbors_2d(coord, expected):
+    assert sorted(neighbors_2d(coord)) == sorted(expected)
 
 
 @pytest.mark.parametrize(
@@ -156,8 +156,8 @@ def test_neighbours_2d(coord, expected):
         (Coord2D(0, 0), Coord2D(5, 5), Coord2D(10, 10), []),
     ]
 )
-def test_bounded_neighbours_2d(coord, corner1, corner2, expected):
-    assert sorted(bounded_neighbours_2d(coord, corner1, corner2)) == sorted(expected)
+def test_bounded_neighbors_2d(coord, corner1, corner2, expected):
+    assert sorted(bounded_neighbors_2d(coord, corner1, corner2)) == sorted(expected)
 
 
 @pytest.mark.parametrize(
@@ -175,8 +175,8 @@ def test_bounded_neighbours_2d(coord, corner1, corner2, expected):
         ]),
     ]
 )
-def test_neighbours_full_2d(coord, expected):
-    assert sorted(neighbours_full_2d(coord)) == sorted(expected)
+def test_neighbors_full_2d(coord, expected):
+    assert sorted(neighbors_full_2d(coord)) == sorted(expected)
 
 
 @pytest.mark.parametrize(
@@ -199,10 +199,10 @@ def test_neighbours_full_2d(coord, expected):
         (Coord2D(1, 1), Coord2D(5, 5), Coord2D(10, 10), []),
     ]
 )
-def test_bounded_neighbours_full_2d(coord, corner1, corner2, expected):
-    assert sorted(bounded_neighbours_full_2d(coord, corner1, corner2)) == sorted(expected)
+def test_bounded_neighbors_full_2d(coord, corner1, corner2, expected):
+    assert sorted(bounded_neighbors_full_2d(coord, corner1, corner2)) == sorted(expected)
 
-########## neighbours 3D 5####################
+########## neighbors 3D 5####################
 
 @pytest.mark.parametrize(
     "coord, expected",
@@ -219,8 +219,8 @@ def test_bounded_neighbours_full_2d(coord, corner1, corner2, expected):
         ]),
     ]
 )
-def test_neighbours_3d(coord, expected):
-    assert sorted(neighbours_3d(coord)) == sorted(expected)
+def test_neighbors_3d(coord, expected):
+    assert sorted(neighbors_3d(coord)) == sorted(expected)
 
 
 @pytest.mark.parametrize(
@@ -232,8 +232,8 @@ def test_neighbours_3d(coord, expected):
         (Coord3D(5, 5, 5), Coord3D(0, 0, 0), Coord3D(4, 4, 4), []),
     ]
 )
-def test_bounded_neighbours_3d(coord, corner1, corner2, expected):
-    assert sorted(bounded_neighbours_3d(coord, corner1, corner2)) == sorted(expected)
+def test_bounded_neighbors_3d(coord, corner1, corner2, expected):
+    assert sorted(bounded_neighbors_3d(coord, corner1, corner2)) == sorted(expected)
 
 
 @pytest.mark.parametrize(
@@ -251,8 +251,8 @@ def test_bounded_neighbours_3d(coord, corner1, corner2, expected):
         ]),
     ]
 )
-def test_neighbours_edge_3d(coord, expected):
-    assert sorted(neighbours_edge_3d(coord)) == sorted(expected)
+def test_neighbors_edge_3d(coord, expected):
+    assert sorted(neighbors_edge_3d(coord)) == sorted(expected)
 
 
 @pytest.mark.parametrize(
@@ -269,8 +269,8 @@ def test_neighbours_edge_3d(coord, expected):
         ]),
     ]
 )
-def test_bounded_neighbours_edge_3d(coord, corner1, corner2, expected):
-    assert sorted(bounded_neighbours_edge_3d(coord, corner1, corner2)) == sorted(expected)
+def test_bounded_neighbors_edge_3d(coord, corner1, corner2, expected):
+    assert sorted(bounded_neighbors_edge_3d(coord, corner1, corner2)) == sorted(expected)
 
 
 @pytest.mark.parametrize(
@@ -280,8 +280,8 @@ def test_bounded_neighbours_edge_3d(coord, corner1, corner2, expected):
         (Coord3D(5, 5, 5), 26),
     ]
 )
-def test_neighbours_full_3d(coord, expected_count):
-    result = neighbours_full_3d(coord)
+def test_neighbors_full_3d(coord, expected_count):
+    result = neighbors_full_3d(coord)
     assert len(result) == expected_count
     assert Coord3D(0, 0, 0) not in result
 
@@ -303,8 +303,8 @@ def test_neighbours_full_3d(coord, expected_count):
         ]),
     ]
 )
-def test_bounded_neighbours_full_3d(coord, corner1, corner2, expected):
-    assert sorted(bounded_neighbours_full_3d(coord, corner1, corner2)) == sorted(expected)
+def test_bounded_neighbors_full_3d(coord, corner1, corner2, expected):
+    assert sorted(bounded_neighbors_full_3d(coord, corner1, corner2)) == sorted(expected)
 
 ########## Grid setters and getters 5####################
 

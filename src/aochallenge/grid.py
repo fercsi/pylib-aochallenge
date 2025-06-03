@@ -88,72 +88,72 @@ def is_within_3d(coord: _Coord3D, corner1: _Coord3D, corner2: _Coord3D) -> bool:
     )
 
 
-def neighbours_2d(coord: _Coord2D) -> list[Coord2D]:
-    return [d + coord for d in _neighbour_direct_2d]
+def neighbors_2d(coord: _Coord2D) -> list[Coord2D]:
+    return [d + coord for d in _neighbor_direct_2d]
 
 
-def bounded_neighbours_2d(
+def bounded_neighbors_2d(
     coord: _Coord2D, corner1: _Coord2D, corner2: _Coord2D
 ) -> list[Coord2D]:
     return [
         d + coord
-        for d in _neighbour_direct_2d
+        for d in _neighbor_direct_2d
         if is_within_2d(d + coord, corner1, corner2)
     ]
 
 
-def neighbours_full_2d(coord: _Coord2D) -> list[Coord2D]:
-    return [d + coord for d in _neighbour_corner_2d]
+def neighbors_full_2d(coord: _Coord2D) -> list[Coord2D]:
+    return [d + coord for d in _neighbor_corner_2d]
 
 
-def bounded_neighbours_full_2d(
+def bounded_neighbors_full_2d(
     coord: _Coord2D, corner1: _Coord2D, corner2: _Coord2D
 ) -> list[Coord2D]:
     return [
         d + coord
-        for d in _neighbour_corner_2d
+        for d in _neighbor_corner_2d
         if is_within_2d(d + coord, corner1, corner2)
     ]
 
 
-def neighbours_3d(coord: _Coord3D) -> list[Coord3D]:
-    return [d + coord for d in _neighbour_direct_3d]
+def neighbors_3d(coord: _Coord3D) -> list[Coord3D]:
+    return [d + coord for d in _neighbor_direct_3d]
 
 
-def bounded_neighbours_3d(
+def bounded_neighbors_3d(
     coord: _Coord3D, corner1: _Coord3D, corner2: _Coord3D
 ) -> list[Coord3D]:
     return [
         d + coord
-        for d in _neighbour_direct_3d
+        for d in _neighbor_direct_3d
         if is_within_3d(d + coord, corner1, corner2)
     ]
 
 
-def neighbours_edge_3d(coord: _Coord3D) -> list[Coord3D]:
-    return [d + coord for d in _neighbour_edge_3d]
+def neighbors_edge_3d(coord: _Coord3D) -> list[Coord3D]:
+    return [d + coord for d in _neighbor_edge_3d]
 
 
-def bounded_neighbours_edge_3d(
+def bounded_neighbors_edge_3d(
     coord: _Coord3D, corner1: _Coord3D, corner2: _Coord3D
 ) -> list[Coord3D]:
     return [
         d + coord
-        for d in _neighbour_edge_3d
+        for d in _neighbor_edge_3d
         if is_within_3d(d + coord, corner1, corner2)
     ]
 
 
-def neighbours_full_3d(coord: _Coord3D) -> list[Coord3D]:
-    return [d + coord for d in _neighbour_corner_3d]
+def neighbors_full_3d(coord: _Coord3D) -> list[Coord3D]:
+    return [d + coord for d in _neighbor_corner_3d]
 
 
-def bounded_neighbours_full_3d(
+def bounded_neighbors_full_3d(
     coord: _Coord3D, corner1: _Coord3D, corner2: _Coord3D
 ) -> list[Coord3D]:
     return [
         d + coord
-        for d in _neighbour_corner_3d
+        for d in _neighbor_corner_3d
         if is_within_3d(d + coord, corner1, corner2)
     ]
 
@@ -216,10 +216,10 @@ Grid: TypeAlias = list[list[T]]|tuple[tuple[T, ...], ...]
 MutableGrid: TypeAlias = list[list[T]]
 manhattan = manhattan_2d
 is_within = is_within_2d
-neighbours = neighbours_2d
-bounded_neighbours = bounded_neighbours_2d
-neighbours_full = neighbours_full_2d
-bounded_neighbours_full = bounded_neighbours_full_2d
+neighbors = neighbors_2d
+bounded_neighbors = bounded_neighbors_2d
+neighbors_full = neighbors_full_2d
+bounded_neighbors_full = bounded_neighbors_full_2d
 set_element = set_element_2d
 get_element = get_element_2d
 iter_grid = iter_grid_2d
@@ -235,37 +235,37 @@ def _c3d(coord: _Coord3D) -> Coord3D:
     return coord if isinstance(coord, Coord3D) else Coord3D(*coord)
 
 
-_neighbour_direct_2d: list[Coord2D] = []
-_neighbour_corner_2d: list[Coord2D] = []
-_neighbour_direct_3d: list[Coord3D] = []
-_neighbour_edge_3d: list[Coord3D] = []
-_neighbour_corner_3d: list[Coord3D] = []
+_neighbor_direct_2d: list[Coord2D] = []
+_neighbor_corner_2d: list[Coord2D] = []
+_neighbor_direct_3d: list[Coord3D] = []
+_neighbor_edge_3d: list[Coord3D] = []
+_neighbor_corner_3d: list[Coord3D] = []
 
 
-def _initNeighbours() -> None:
-    global _neighbour_direct_2d
-    global _neighbour_corner_2d
-    global _neighbour_direct_3d
-    global _neighbour_edge_3d
-    global _neighbour_corner_3d
+def _initNeighbors() -> None:
+    global _neighbor_direct_2d
+    global _neighbor_corner_2d
+    global _neighbor_direct_3d
+    global _neighbor_edge_3d
+    global _neighbor_corner_3d
     for x, y, z in itertools.product((-1, 0, 1), repeat=3):
         if (x, y, z) == (0, 0, 0):
             continue
-        _neighbour_corner_3d.append(Coord3D(x, y, z))
+        _neighbor_corner_3d.append(Coord3D(x, y, z))
 
         if x != 0 and y != 0 and z != 0:
             continue
-        _neighbour_edge_3d.append(Coord3D(x, y, z))
+        _neighbor_edge_3d.append(Coord3D(x, y, z))
 
         if z == 0:
-            _neighbour_corner_2d.append(Coord2D(x, y))
+            _neighbor_corner_2d.append(Coord2D(x, y))
 
         if (x ^ y ^ z) & 1 == 0:
             continue
-        _neighbour_direct_3d.append(Coord3D(x, y, z))
+        _neighbor_direct_3d.append(Coord3D(x, y, z))
 
         if z == 0:
-            _neighbour_direct_2d.append(Coord2D(x, y))
+            _neighbor_direct_2d.append(Coord2D(x, y))
 
 
-_initNeighbours()
+_initNeighbors()
