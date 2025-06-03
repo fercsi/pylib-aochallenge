@@ -59,13 +59,16 @@ class Coord3D(NamedTuple):
 _Coord2D = Coord2D | tuple[int, int]
 _Coord3D = Coord3D | tuple[int, int, int]
 
+
 def manhattan_2d(a: _Coord2D, b: _Coord2D) -> int:
     d = _c2d(a) - b
     return abs(d.x) + abs(d.y)
 
+
 def manhattan_3d(a: _Coord3D, b: _Coord3D) -> int:
     d = _c3d(a) - b
     return abs(d.x) + abs(d.y) + abs(d.z)
+
 
 def is_within_2d(coord: _Coord2D, corner1: _Coord2D, corner2: _Coord2D) -> bool:
     v = _c2d(coord)
@@ -157,23 +160,60 @@ def bounded_neighbors_full_3d(
         if is_within_3d(d + coord, corner1, corner2)
     ]
 
+
 ########## Grids ####################
 
 T = TypeVar("T")
 
 # from Python 3.12 (mypy is also not prepared for this, yet)
-#type MutableGrid2D[T] = list[list[T]]
-#type _ImmutableDim[T] = tuple[T, ...]|str
-#type _ImmutableGrid2D[T] = tuple[_immutableDim[T], ...]|list[_immutableDim[T]]
-#type Grid2D[T] = MutableGrid2D[T]|_ImmutableGrid2D[T]
-#type MutableGrid3D[T] = list[list[list[T]]]
-#type _ImmutableGrid23[T] = tuple[_immutableGrid2D[T], ...]|list[_immutableGrid2D[T]]
-#type Grid3D[T] = MutableGrid3D[T]|_ImmutableGrid3D[T]
+# type MutableGrid2D[T] = list[list[T]]
+# type _ImmutableDim[T] = tuple[T, ...]|str
+# type _ImmutableGrid2D[T] = tuple[_immutableDim[T], ...]|list[_immutableDim[T]]
+# type Grid2D[T] = MutableGrid2D[T]|_ImmutableGrid2D[T]
+# type MutableGrid3D[T] = list[list[list[T]]]
+# type _ImmutableGrid23[T] = tuple[_immutableGrid2D[T], ...]|list[_immutableGrid2D[T]]
+# type Grid3D[T] = MutableGrid3D[T]|_ImmutableGrid3D[T]
 
 MutableGrid2D: TypeAlias = list[list[T]]
-Grid2D: TypeAlias = list[list[T]]|tuple[tuple[T, ...], ...]
+Grid2D: TypeAlias = list[list[T]] | tuple[tuple[T, ...], ...]
 MutableGrid3D: TypeAlias = list[list[list[T]]]
-Grid3D: TypeAlias = list[list[list[T]]]|tuple[tuple[tuple[T, ...], ...], ...]
+Grid3D: TypeAlias = list[list[list[T]]] | tuple[tuple[tuple[T, ...], ...], ...]
+
+
+def width_2d(grid: Grid2D[T]) -> int:
+    return len(grid[0])
+
+
+def height_2d(grid: Grid2D[T]) -> int:
+    return len(grid)
+
+
+def width_3d(grid: Grid3D[T]) -> int:
+    return len(grid[0][0])
+
+
+def height_3d(grid: Grid3D[T]) -> int:
+    return len(grid[0])
+
+
+def depth_3d(grid: Grid3D[T]) -> int:
+    return len(grid)
+
+
+def dimensions_2d(grid: Grid2D[T]) -> Coord2D:
+    return Coord2D(len(grid[0]), len(grid))
+
+
+def dimensions_3d(grid: Grid3D[T]) -> Coord3D:
+    return Coord3D(len(grid[0][0]), len(grid[0]), len(grid))
+
+
+def boundaries_2d(grid: Grid2D[T]) -> Coord2D:
+    return Coord2D(len(grid[0]) - 1, len(grid) - 1)
+
+
+def boundaries_3d(grid: Grid3D[T]) -> Coord3D:
+    return Coord3D(len(grid[0][0]) - 1, len(grid[0]) - 1, len(grid) - 1)
 
 
 def set_element_2d(grid: MutableGrid2D[T], pos: _Coord2D, value: T) -> None:
@@ -212,7 +252,7 @@ def iter_grid_3d(grid: Grid3D[T]) -> Iterator[tuple[Coord3D, T]]:
 ########## Simplify 2D interface ####################
 
 Coord = Coord2D
-Grid: TypeAlias = list[list[T]]|tuple[tuple[T, ...], ...]
+Grid: TypeAlias = list[list[T]] | tuple[tuple[T, ...], ...]
 MutableGrid: TypeAlias = list[list[T]]
 manhattan = manhattan_2d
 is_within = is_within_2d
@@ -220,6 +260,10 @@ neighbors = neighbors_2d
 bounded_neighbors = bounded_neighbors_2d
 neighbors_full = neighbors_full_2d
 bounded_neighbors_full = bounded_neighbors_full_2d
+width = width_2d
+height = height_2d
+dimensions = dimensions_2d
+boundaries = boundaries_2d
 set_element = set_element_2d
 get_element = get_element_2d
 iter_grid = iter_grid_2d
