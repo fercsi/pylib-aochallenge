@@ -1,13 +1,12 @@
 #!/usr/bin/python3
 
-import itertools
 import sys
-from typing import cast, Any, Generator
+from typing import Any, Generator
 from .input import load, variant
 
 
 class Solution:
-    basename: str
+    basename: str # deprecated property!
 
     def __init__(self) -> None:
         self.basename: str = sys.argv[0][:-3]
@@ -33,12 +32,13 @@ class Solution:
         *,
         lut: dict[str | None, Any] | None = None,
     ) -> list[str | int | list[str | int]] | Any:
+        basename: str = sys.argv[0][:-3]
         return load(
             splitlines,
             splitrecords,
             recordtype,
             lut=lut,
-            filename=self.basename + "@@.input",
+            filename = basename + "@@.input",
         )
 
     def variant(self) -> str | None:
