@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from .grid import Grid2D, T
-from .solver import Solution
+from .solver import Solver
 
 
 def print_condensed(data: Grid2D[T]) -> None:
@@ -34,10 +34,9 @@ def print_arranged(data: Grid2D[T]) -> None:
         print("")
 
 
-def print_solution(solution: "Solution", *, indent: str = "") -> None:
+def print_solution(solution: Solver, *, indent: str = "") -> None:
     content = solution.__dict__
     for name, value in content.items():
-        if name in ("basename",):
-            print(1)
+        if name == "basename":
             continue
         print(f"{indent}{name}: {value}")

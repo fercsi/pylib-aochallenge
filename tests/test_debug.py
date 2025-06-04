@@ -41,6 +41,7 @@ def test_print_arranged(data, printed, capsys):
 
 
 def test_print_solution(capsys):
+    # Using Solution instead Solver to test basename`
     class TestSolution(Solution):
         def __init__(self) -> None:
             super().__init__()
@@ -49,8 +50,7 @@ def test_print_solution(capsys):
             self.y = 13.7
             self.arr = [1,2,3]
     test_solution = TestSolution()
-#>    print(list(test_solution.__dict__.keys()))
     print_solution(test_solution)
     captured = capsys.readouterr()
-    expected = "1\ns: abc\nx: 42\ny: 13.7\narr: [1, 2, 3]\n"
+    expected = "s: abc\nx: 42\ny: 13.7\narr: [1, 2, 3]\n"
     assert captured.out == expected
