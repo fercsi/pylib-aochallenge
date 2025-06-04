@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from .solution import Solution
+from .solver import Solver, Solution
 from .input import load, variant
 from .debug import print_condensed, print_csv, print_arranged, print_solution
 from .image import save_image

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from .grid import Grid2D, T
-from .solution import Solution
+from .solver import Solution
 
 
 def print_condensed(data: Grid2D[T]) -> None:

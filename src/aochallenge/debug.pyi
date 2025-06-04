@@ -1,5 +1,5 @@
 from .grid import Grid2D as Grid2D, T as T
-from .solution import Solution as Solution
+from .solver import Solution as Solution
 
 def print_condensed(data: Grid2D[T]) -> None: ...
 def print_csv(data: Grid2D[T]) -> None: ...

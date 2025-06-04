@@ -2,8 +2,40 @@ import pathlib
 import pytest
 import sys
 
-from aochallenge import Solution
+from aochallenge import Solver, Solution
 
+
+# TEST SOLVER
+
+def test_solver_parts(capsys):
+    class MySolution(Solver):
+        def part1(self):
+            return 42
+        def part2(self):
+            return 69.96
+        def part3(self):
+            return "Hello World!"
+
+    expected = "1: 42\n2: 69.96\n3: Hello World!\n"
+    MySolution().main()
+    captured = capsys.readouterr()
+    assert captured.out == expected
+
+
+def test_solver_more(capsys):
+    class MySolution(Solver):
+        def solve_more(self):
+            yield 42
+            yield 69.96
+            yield "Hello World!"
+
+    expected = "1: 42\n2: 69.96\n3: Hello World!\n"
+    MySolution().main()
+    captured = capsys.readouterr()
+    assert captured.out == expected
+
+
+# TEST (DEPRECATED) SOLUTION
 
 @pytest.fixture
 def solution():
@@ -29,7 +61,6 @@ INPUTS = {
     "mixed": "row1,45,6.9,3.4\nrow2,78,7.9,4.2\n",
     "inttype": 123456,
 }
-
 
 @pytest.mark.parametrize(
     "input, params, data",
@@ -104,9 +135,6 @@ def test_solve_more(capsys):
     MySolution().main()
     captured = capsys.readouterr()
     assert captured.out == expected
-
-
-# DEPRECATED METHODS
 
 
 @pytest.mark.parametrize(

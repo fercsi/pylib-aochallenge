@@ -5,12 +5,7 @@ from typing import Any, Generator
 from .input import load, variant
 
 
-class Solution:
-    basename: str # deprecated property!
-
-    def __init__(self) -> None:
-        self.basename: str = sys.argv[0][:-3]
-
+class Solver:
     def solve_more(self) -> Generator[int | str, None, None]:
         i: int = 1
         while hasattr(self, f"part{i}"):
@@ -22,6 +17,23 @@ class Solution:
         for i, result in enumerate(self.solve_more(), 1):
             print(f"{i}: {result}")
 
+class Solution(Solver):
+    basename: str # deprecated property!
+
+    def __init__(self) -> None:
+        self.basename: str = sys.argv[0][:-3]
+
+#>    def solve_more(self) -> Generator[int | str, None, None]:
+#>        i: int = 1
+#>        while hasattr(self, f"part{i}"):
+#>            method = getattr(self, f"part{i}")
+#>            yield method()
+#>            i += 1
+#>
+#>    def main(self) -> None:
+#>        for i, result in enumerate(self.solve_more(), 1):
+#>            print(f"{i}: {result}")
+#>
     # Following legacy interface is deprecated
 
     def load(
