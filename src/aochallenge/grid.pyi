@@ -33,6 +33,8 @@ Grid2D: TypeAlias
 MutableGrid3D: TypeAlias
 Grid3D: TypeAlias
 
+def create_grid_2d(size: Union[Coord2D, Grid2D[T]], default: T) -> Grid2D[T]: ...
+def create_grid_3d(size: Union[Coord3D, Grid3D[T]], default: T) -> Grid3D[T]: ...
 def width_2d(grid: Grid2D[T]) -> int: ...
 def height_2d(grid: Grid2D[T]) -> int: ...
 def width_3d(grid: Grid3D[T]) -> int: ...
@@ -57,6 +59,7 @@ neighbors = neighbors_2d
 bounded_neighbors = bounded_neighbors_2d
 neighbors_full = neighbors_full_2d
 bounded_neighbors_full = bounded_neighbors_full_2d
+create_grid = create_grid_2d
 width = width_2d
 height = height_2d
 dimensions = dimensions_2d

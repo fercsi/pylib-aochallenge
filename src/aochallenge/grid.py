@@ -180,6 +180,21 @@ MutableGrid3D: TypeAlias = list[list[list[T]]]
 Grid3D: TypeAlias = list[list[list[T]]] | tuple[tuple[tuple[T, ...], ...], ...]
 
 
+def create_grid_2d(size: Coord2D | Grid2D[T], default: T) -> Grid2D[T]:
+    if not isinstance(size[0], int):
+        print("x" * 40)
+        size = dimensions_2d(size)
+    grid = [[default] * size.x for _ in range(size.y)]
+    return grid
+
+
+def create_grid_3d(size: Coord3D | Grid3D[T], default: T) -> Grid3D[T]:
+    if not isinstance(size[0], int):
+        size = dimensions_3d(size)
+    grid = [[[default] * size.x for _1 in range(size.y)] for _2 in range(size.z)]
+    return grid
+
+
 def width_2d(grid: Grid2D[T]) -> int:
     return len(grid[0])
 
@@ -260,6 +275,8 @@ neighbors = neighbors_2d
 bounded_neighbors = bounded_neighbors_2d
 neighbors_full = neighbors_full_2d
 bounded_neighbors_full = bounded_neighbors_full_2d
+
+create_grid = create_grid_2d
 width = width_2d
 height = height_2d
 dimensions = dimensions_2d

@@ -309,7 +309,31 @@ def test_bounded_neighbors_full_3d(coord, corner1, corner2, expected):
 ########## Grid setters and getters 5####################
 
 @pytest.mark.parametrize(
-    "grid,expected",
+    "size, default, expected",
+    [
+        (Coord2D(2, 3), 0, [[0, 0], [0, 0], [0, 0]]),
+        ([[1, 2], [3, 4]], ".", [[".", "."], [".", "."]]),
+        (Coord2D(1, 1), "x", [["x"]]),
+    ]
+)
+def test_create_grid_2d(size, default, expected):
+    assert create_grid_2d(size, default) == expected
+
+@pytest.mark.parametrize(
+    "size, default, expected",
+    [
+        (Coord3D(2, 2, 1), 0, [[[0, 0], [0, 0]]]),  # 1 x 2 x 2
+        ([[[1, 2], [3, 4]]], ".", [[[".", "."], [".", "."]]]),  # 1 x 2 x 2
+        (Coord3D(1, 1, 1), "*", [[["*"]]]),
+        (Coord3D(2, 1, 2), "-", [[["-", "-"]], [["-", "-"]]]),  # 2 x 1 x 2
+    ]
+)
+def test_create_grid_3d(size, default, expected):
+    assert create_grid_3d(size, default) == expected
+
+
+@pytest.mark.parametrize(
+    "grid, expected",
     [
         ([[1, 2], [3, 4]], 2),
         ([[0]], 1),
@@ -320,7 +344,7 @@ def test_width_2d(grid, expected):
     assert width_2d(grid) == expected
 
 @pytest.mark.parametrize(
-    "grid,expected",
+    "grid, expected",
     [
         ([[1, 2], [3, 4]], 2),
         ([[0]], 1),
@@ -331,7 +355,7 @@ def test_height_2d(grid, expected):
     assert height_2d(grid) == expected
 
 @pytest.mark.parametrize(
-    "grid,expected",
+    "grid, expected",
     [
         ([[[1, 2], [3, 4]]], 2),  # 1 x 2 x 2
         ([[[0]]], 1),             # 1 x 1 x 1
@@ -343,7 +367,7 @@ def test_width_3d(grid, expected):
     assert width_3d(grid) == expected
 
 @pytest.mark.parametrize(
-    "grid,expected",
+    "grid, expected",
     [
         ([[[1, 2], [3, 4]]], 2),  # 1 x 2 x 2
         ([[[0]]], 1),
@@ -355,7 +379,7 @@ def test_height_3d(grid, expected):
     assert height_3d(grid) == expected
 
 @pytest.mark.parametrize(
-    "grid,expected",
+    "grid, expected",
     [
         ([[[1, 2], [3, 4]]], 1),  # 1 x 2 x 2
         ([[[0]]], 1),
@@ -368,7 +392,7 @@ def test_depth_3d(grid, expected):
 
 
 @pytest.mark.parametrize(
-    "grid,expected",
+    "grid, expected",
     [
         ([[1, 2], [3, 4]], Coord2D(2, 2)),
         ([[0]], Coord2D(1, 1)),
@@ -378,8 +402,9 @@ def test_depth_3d(grid, expected):
 def test_dimensions_2d(grid, expected):
     assert dimensions_2d(grid) == expected
 
+
 @pytest.mark.parametrize(
-    "grid,expected",
+    "grid, expected",
     [
         ([[[1]]], Coord3D(1, 1, 1)),
         ([[[1, 2], [3, 4]]], Coord3D(2, 2, 1)),  # 1 x 2 x 2
@@ -390,7 +415,7 @@ def test_dimensions_3d(grid, expected):
     assert dimensions_3d(grid) == expected
 
 @pytest.mark.parametrize(
-    "grid,expected",
+    "grid, expected",
     [
         ([[1, 2], [3, 4]], Coord2D(1, 1)),
         ([[0]], Coord2D(0, 0)),
@@ -401,7 +426,7 @@ def test_boundaries_2d(grid, expected):
     assert boundaries_2d(grid) == expected
 
 @pytest.mark.parametrize(
-    "grid,expected",
+    "grid, expected",
     [
         ([[[1]]], Coord3D(0, 0, 0)),
         ([[[1, 2], [3, 4]]], Coord3D(1, 1, 0)),
