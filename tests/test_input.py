@@ -1,3 +1,4 @@
+import os
 import pathlib
 import pytest
 import sys
@@ -66,10 +67,30 @@ def test_load(args, params, data, argv):
         (["-t"], [[21, 22, 23], [24, 25, 26]]),
     ),
 )
-def test_load_file(args, expected, argv):
+def test_load_default(args, expected, argv):
     sys.argv.extend(args)
     read_data = load(True, ",", int)
     assert read_data == expected
+
+
+@pytest.mark.parametrize(
+    "args, expected",
+    (
+        ([], [[11, 12, 13], [14, 15, 16]]),
+        (["-t"], [[21, 22, 23], [24, 25, 26]]),
+    ),
+)
+def test_load_filename(args, expected, argv):
+    sys.argv.extend(args)
+    filename = os.path.dirname(sys.argv[0]) + "/input@@.txt"
+    read_data = load(True, ",", int, filename=filename)
+    assert read_data == expected
+
+
+def test_load_file_not_found(argv):
+    filename = "nonexistent_file.txt"
+    with pytest.raises(FileNotFoundError):
+        load(True, ",", int, filename=filename)
 
 
 @pytest.mark.parametrize(

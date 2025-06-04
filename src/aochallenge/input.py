@@ -15,7 +15,7 @@ def load(
     filename: str | None = None,
 ) -> list[str | int | list[str | int]] | Any:
     if filename is None:
-        filename = os.path.dirname(sys.argv[0]) + "/input@@.txt"
+        filename = os.path.dirname(sys.argv[0]) + "/input@@"
     variant: str = sys.argv[1] if len(sys.argv) > 1 else ""
     content: Any
     if lut is not None:
@@ -25,8 +25,14 @@ def load(
         content = lut_content
     else:
         filename = filename.replace("@@", variant)
-        with open(filename, "r") as f:
-            content = f.read()
+        if os.path.isfile(filename):
+            with open(filename, "r") as f:
+                content = f.read()
+        elif os.path.isfile(filename + ".txt"):
+            with open(filename + ".txt", "r") as f:
+                content = f.read()
+        else:
+            raise FileNotFoundError(f"Couldn't load either '{filename}' or '{filename}.txt'")
     if splitlines:
         content = content.splitlines()
         if splitrecords is not None:
