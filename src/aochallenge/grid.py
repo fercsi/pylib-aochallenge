@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import itertools
-from typing import Iterator, NamedTuple, Self, TypeAlias, TypeVar
+from typing import cast, Iterator, NamedTuple, Self, TypeAlias, TypeVar
 
 
 # Note, that we use "type: ignore[override]", because we override the default
@@ -180,17 +180,20 @@ MutableGrid3D: TypeAlias = list[list[list[T]]]
 Grid3D: TypeAlias = list[list[list[T]]] | tuple[tuple[tuple[T, ...], ...], ...]
 
 
-def create_grid_2d(size: Coord2D | Grid2D[T], default: T) -> Grid2D[T]:
+def create_grid_2d(size: _Coord2D | Grid2D[T], default: T) -> Grid2D[T]:
     if not isinstance(size[0], int):
-        print("x" * 40)
-        size = dimensions_2d(size)
+        coord = cast(Grid2D[T], size)
+        size = dimensions_2d(coord)
+    size = _c2d(cast(Coord2D, size))
     grid = [[default] * size.x for _ in range(size.y)]
     return grid
 
 
-def create_grid_3d(size: Coord3D | Grid3D[T], default: T) -> Grid3D[T]:
+def create_grid_3d(size: _Coord3D | Grid3D[T], default: T) -> Grid3D[T]:
     if not isinstance(size[0], int):
-        size = dimensions_3d(size)
+        coord = cast(Grid3D[T], size)
+        size = dimensions_3d(coord)
+    size = _c3d(cast(Coord3D, size))
     grid = [[[default] * size.x for _1 in range(size.y)] for _2 in range(size.z)]
     return grid
 
