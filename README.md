@@ -54,8 +54,8 @@ For  each challenge  there are  one  or more  test inputs  and there  is
 your  challenge one.  The  class expects  the input  files  to be  named
 appropriately to be able to  load automatically, but also arbitrary file
 name can be  specified. Default filebname is 'input'  or 'input.txt' and
-test  file  variant  can  be  appended to  'inpit',  i.e.  'input-t'  or
-'inpuz-t.txt'.
+test  file  variant  can  be  appended to  'input',  i.e.  'input-t'  or
+'input-t.txt'.
 
     aoc/2022/01/
     |---- aoc.py        source code
@@ -64,11 +64,11 @@ test  file  variant  can  be  appended to  'inpit',  i.e.  'input-t'  or
 
 In this case, you can run your code with the test data as follows:
 
-    $ ./aoc-2201.py -t
+    $ ./aoc.py -t
 
 And with the challenge data, simply:
 
-    $ ./aoc-2201.py
+    $ ./aoc.py
 
 In some special cases  the input is a single line of  data or some other
 simple constructs.  In this case it  is unnecessary to create  files for
@@ -82,13 +82,13 @@ INPUT = {
 }
 ...
 def __init__(self):
-    super().__init__()
     data = self.load(lut=INPUT)
+    ...
 ```
 
 If you need which variant the solution  has been run with, you can check
 it with `variant`. It returns `None` if no variant has bee given and the
-variant id (E.g. `"-t"`) if it has been:
+variant id (E.g. `'-t'`) if it has been:
 
 ```python
 def __init__(self):
@@ -170,7 +170,7 @@ for (x, y), v in grid.iter_grid(area):
     rowsums[y] += v
 ```
 
-Types:
+### Types
 
 - `Coord2D` (or  `Coord`), `Coord3D`: A 2D/3D  coordinate represented as
   a  hashable  named  tuple  with  x, y  (and  z)  components.  Supports
@@ -181,38 +181,49 @@ Types:
 - `MutableGrid2D`  (or `MutableGrid`),`MutableGrid3D`: Type alias  for a
   mutable 2D/3D grid of type T, specifically a list of lists.
 
-Functions:
+### Functions
 
-Note: the dimension suffix `_2d` is optional, 2D-specific functions like
-`neighbors_2d` can also be called simply as `neighbors`.
+The  functions below  can also  be used  with `_2d`  and `_3d`  suffixes
+(e.g., `neighbors_2d` and `neighbors_3d`),  depending on your needs. The
+3D variants correspond to the  `Coord3D` and `Grid3D[T]` types. Omitting
+the  suffix defaults  to 2D  usage. Note  that some  functions are  only
+available in a 3D context. This is clearly indicated where applicable.
 
-- `manhattan_2d`, `manhattan_3d`: Returns the Manhattan distance between
-  two 2D/3D coordinates.
-- `is_within_2d`, `is_within_3d`:  Returns True if the  2D/3D coordinate
-  `coord` lies  within or on  the boundary  defined by the  two opposite
-  dcorners. Assumes  corner1 has  the smaller  coordinate values  in all
-  dimensions.
-- `neighbors_2d`,   `neighbors_3d`:   Returns   the   list   of   direct
+Coordinate operations:
+
+- `manhattan(a: Coord, b: Coord) -> int`: Returns the Manhattan distance
+  between two 2D/3D coordinates.
+- `is_within(p: Coord, corner1: Coord, corner2: Coord) -> bool`: Returns
+  True  if the  2D/3D  coordinate `p`  lies within  or  on the  boundary
+  defined by the two opposite  dcorners. Assumes corner1 has the smaller
+  coordinate values in all dimensions.
+- `neighbors(coord: Coord)  -> list[Coord]`: Returns the  list of direct
   (side-adjacent) neighbors of the given 2D/3D coordinate.
-- `bounded_neighbors_2d`,  `bounded_neighbors_3d`: Returns  the list  of
-  direct (side-adjacent) neighbors of  the 2D/3D coordinate `coord` that
-  lie  within the  bounds defined  by `corner1`  and `corner2`  Assumes.
-  `corner1` has the smaller values in all dimensions                   .
-- `neighbors_full_2d`,  `neighbors_full_3d`:  Returns  the list  of  all
+- `bounded_neighbors(coord:  Coord, corner1:  Coord, corner2:  Coord) ->
+  list[Coord]`: Returns the list  of direct (side-adjacent) neighbors of
+  the 2D/3D  coordinate `coord`  that lie within  the bounds  defined by
+  `corner1` and `corner2`  Assumes. `corner1` has the  smaller values in
+  all dimensions .
+- `neighbors_full(coord: Coord) -> list[Coord]`: Returns the list of all
   neighbors of the  given 2D/3D coordinate, including  those adjacent by
   faces, edges, and corners (8/26-directional neighbors).
-- `bounded_neighbors_full_2d`, `bounded_neighbors_full_3d`:  Returns the
-  list of all  neighbors of the given 2D/3D  coordinate, including those
-  adjacent  by faces,  edges, and  corners (8/26-directional  neighbors)
-  that lie within the bounds defined by `corner1` and `corner2` Assumes.
-  `corner1` has the smaller values in all dimensions .
-- `neighbors_edge_3d`:  Returns the  list  of 3D  neighbors adjacent  to
-  the  given coordinate  by faces  and edges,  excluding corner-adjacent
-  neighbors.
-- `bounded_neighbors_edge_3d`: Returns the list of 3D neighbors adjacent
-  by faces and edges that lie within the bounds defined by `corner1` and
+- `bounded_neighbors_full(coord: Coord, corner1:  Coord, corner2: Coord)
+  -> list[Coord]`: Returns the list of  all neighbors of the given 2D/3D
+  coordinate,  including those  adjacent  by faces,  edges, and  corners
+  (8/26-directional  neighbors) that  lie within  the bounds  defined by
+  `corner1` and `corner2`  Assumes. `corner1` has the  smaller values in
+  all dimensions .
+- `neighbors_edge_3d(coord: Coord3D) -> list[Coord3D]`: Returns the list
+  of 3D neighbors  adjacent to the given coordinate by  faces and edges,
+  excluding corner-adjacent neighbors.
+- `bounded_neighbors_edge_3d(coord:  Coord3D,  corner1: Coord,  corner2:
+  Coord) -> list[Coord3D]`: Returns the list of 3D neighbors adjacent by
+  faces and  edges that lie within  the bounds defined by  `corner1` and
   `corner2`,  excluding  corner  neighbors. Assumes  `corner1`  has  the
   smaller coordinate values in all dimensions.
+
+Grid operations:
+
 - `create_grid_2d`,  `create_grid_3d`: Returns with a  2D/3D grid filled
   up with th default value.
 - `width_2d`,  `height_2d`, `width_3d`, `height_3d`,  `depth_3d`: Return
@@ -237,7 +248,7 @@ Note: the dimension suffix `_2d` is optional, 2D-specific functions like
 The  class  contains  some  debugging  solutions  to  display  temporary
 results.
 
-- `print_condensed(grid: Grid2D[T])`:  Prints content  of  a  2-dimensional container  of
+- `print_condensed(grid: Grid2D[T])`:  Prints content  of  a  2D grid  of
   characters "condensed". E.g. if data is
 
       [['#', '#', '.'], ['.', '#', '.'], ['.', '#', '#']]`
@@ -248,11 +259,11 @@ results.
       .#.
       .##
 
-  Note that the 2-dimensional container can be also a list of strings.
-- `def  print_csv(grid: Grid2D[T])`: Prints  content of  a 2-dimensional  container in  a
-  comma separated way
-- `def  print_arranged(grid: Grid2D[T])`: Prints  content  of  a 2-dimensional  container
-  arranged into columns
+  Note that the 2D grid can be also a list of strings.
+- `def  print_csv(grid: Grid2D[T])`:  Prints content of  a 2-dimensional
+  container in a comma separated way
+-   `def  print_arranged(grid:   Grid2D[T])`:   Prints   content  of   a
+  2-dimensional container arranged into columns
 -  `def  print_solution(solution:  Solver)`:   Prints  properties  of  a
   `Solver` based object
 
@@ -290,7 +301,7 @@ Festures:
 
 ## Autoimported modules and functions
 
-The  aochallenge  module also  imports  several  commonly used  standard
+The **aochallenge**  module also imports several  commonly used standard
 functions and modules when used with `from aochallenge import *`.
 
 Imported modules:
